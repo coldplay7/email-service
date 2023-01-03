@@ -28,17 +28,17 @@ public class SendGridEmailProvider implements EmailProvider {
     @Override
     public void sendEmail(String to, String subject, String body) {
         log.info("Trying to send email using send grid provider.");
-        Mail mail = new Mail(new Email(fromEmail),
+        var mail = new Mail(new Email(fromEmail),
                 subject,
                 new Email(to),
                 new Content("text/plain", body));
-        SendGrid sg = new SendGrid(apiKey);
-        Request request = new Request();
+        var sg = new SendGrid(apiKey);
+        var request = new Request();
         try {
             request.setMethod(POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
-            Response response = sg.api(request);
+            var response = sg.api(request);
             handleResponse(response);
             log.info("Send grid provider succeeded to send Email.");
         } catch (Exception ex) {
